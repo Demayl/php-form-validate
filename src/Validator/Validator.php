@@ -6,7 +6,7 @@ namespace Validator;
  *
  * Validates form input
  *
- * @package Valitron
+ * @package Validator::Validator
  * @author  Denis Kanchev <denis@demayl.com>
  * @link    https://github.com/Demayl
  * @copyright   Copyright (c) 2017 Denis Kanchev

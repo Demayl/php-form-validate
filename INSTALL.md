@@ -1,0 +1,1 @@
+Requires mbstring php extension

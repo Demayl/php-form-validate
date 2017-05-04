@@ -1,6 +1,6 @@
 # php-form-validate
 PHP Easy and intuitive validation of form fields
-
+Early version, use at own risk!
 ## Examples
 ```php
 $fields = [

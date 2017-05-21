@@ -1,6 +1,9 @@
 # php-form-validate
-PHP Easy and intuitive validation of form fields
-Early version, use at own risk!
+**PEIV**
+PHP Easy and intuitive validation of form fields  
+
+
+>Alpha version, use at own risk!
 ## Examples
 ```php
 $fields = [
@@ -71,11 +74,11 @@ if( $validator->hasErrors() ){
 
 ## Methods
 
-- clear() : Clear all valid/invalid/error fields. Used to prepare another validation. It's called on every validateAll() call
-- hasErrors() : Test if any errors occurred
-- vaidateAll( array $tests ) : Validate given parameters
-- validate( str $field, array $params ) : Validate single field
-- setInvalid( str $field, str $error_msg, $value ) : Invalidate field and set custom error message & value. Get it with $validator->invalid[$field]
+- **clear()** : Clear all valid/invalid/error fields. Used to prepare another validation. It's called on every validateAll() call
+- **hasErrors()** : Test if any errors occurred
+- **vaidateAll( array $tests )** : Validate given parameters
+- **validate( str $field, array $params )** : Validate single field
+- **setInvalid( str $field, str $error_msg, $value )** : Invalidate field and set custom error message & value. Get it with $validator->invalid[$field]
 ### Filters
 - non_digit
 - trim

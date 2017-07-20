@@ -3,7 +3,7 @@
 PHP Easy and intuitive validation of form fields  
 
 
->Alpha version, use at own risk!
+>Beta version. Used on some production environments
 ## Examples
 ```php
 $fields = [

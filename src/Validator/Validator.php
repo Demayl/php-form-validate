@@ -110,7 +110,7 @@ class ValidatorTypes extends ValidatorShared {
 	const DATE	  = '/^(\d{4})-(\d{2})-(\d{2})$/';
 	const DATETIME  = '/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}$/'; // MySQL format YYYY-MM-DD hh:mm:ss
 	const TIME	  = '/^(?:[01][0-9]|2[0-3])\:(?:[0-5][0-9])$/'; // 24 hour time format
-	const UNIX_TIME = '/^d{9}$/';
+	const UNIX_TIME = '/^d{10}$/';
 
 	public function int($what){
 		return (bool) preg_match( "/^\d+$/", $what ); // Evade auto casting problems

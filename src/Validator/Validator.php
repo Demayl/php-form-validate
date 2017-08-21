@@ -209,7 +209,7 @@ class ValidatorOptions extends ValidatorShared {
 	}
 
 	public function testOptions( array $options, $value ){
-		$check = null;
+		$check = true;
 		foreach( $this->tests as $_test ){
 			if( !array_key_exists( $_test, $options ) ) continue; // Skip missing field
 			$check = $this->$_test( $value, $options[$_test], $options );

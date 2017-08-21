@@ -245,7 +245,11 @@ class ValidatorOptions extends ValidatorShared {
 		$check = false;
 
 		foreach( $match as $_match ){
-			if( preg_match('/^([\\/#%]).*\1$/', $_match ) ) { // Looks like regex
+			if( is_callable( $_match ) ){
+				$check = $_match( $value );
+				if( $check ) break;
+			}
+			elseif( preg_match('/^([\\/#%]).*\1$/', $_match ) ) { // Looks like regex
 				$check = preg_match( $_match,$value );
 				if( $check ) break;
 			}

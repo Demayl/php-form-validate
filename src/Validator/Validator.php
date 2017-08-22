@@ -209,7 +209,7 @@ class ValidatorOptions extends ValidatorShared {
 	}
 
 	public function testOptions( array $options, $value ){
-		$check = true;
+		$check = null;
 		foreach( $this->tests as $_test ){
 			if( !array_key_exists( $_test, $options ) ) continue; // Skip missing field
 			$check = $this->$_test( $value, $options[$_test], $options );
@@ -489,7 +489,7 @@ class Validator extends ValidatorShared {
 
 				$check = $this->options->testOptions( $params, $_value ); // Perform tests
 
-				if( !$check ) return false;
+				if( $check === false ) return false;
 
 			} else if( $type ){ // Unknown type - fatal
 				$this->throwError( 'Unknown type: ' . $type );
@@ -541,10 +541,10 @@ class Validator extends ValidatorShared {
 						$params['value'] = $this->filter->$_filter($params['value']);
 					} else {
 
-						if( is_array($this->fields[$field]) ){ // Field is array
+						if( isset($this->fields[$field]) && is_array($this->fields[$field]) ){ // Field is array
 							if( !$params['multiple'] ) $this->throwError( 'Field '.$field.' is array, but not specified in params as multiple. Possible logic error.' );
 							$this->fields[$field] = array_map( [$this->filter,$_filter], $this->fields[$field] );
-						} else {
+						} elseif( isset($this->fields[$field]) ) {
 							$this->fields[$field] = $this->filter->$_filter( $this->fields[$field] );
 						}
 					}

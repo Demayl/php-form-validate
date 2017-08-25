@@ -250,7 +250,11 @@ class ValidatorOptions extends ValidatorShared {
 		$check = false;
 
 		foreach( $match as $_match ){
-			if( preg_match('/^([\\/#%]).*\1$/', $_match ) ) { // Looks like regex
+			if( is_callable( $_match ) ){
+				$check = $_match( $value );
+				if( $check ) break;
+			}
+			elseif( preg_match('/^([\\/#%]).*\1$/', $_match ) ) { // Looks like regex
 				$check = preg_match( $_match,$value );
 				if( $check ) break;
 			}
@@ -490,7 +494,7 @@ class Validator extends ValidatorShared {
 
 				$check = $this->options->testOptions( $params, $_value ); // Perform tests
 
-				if( !$check ) return false;
+				if( $check === false ) return false;
 
 			} else if( $type ){ // Unknown type - fatal
 				$this->throwError( 'Unknown type: ' . $type );
@@ -542,10 +546,10 @@ class Validator extends ValidatorShared {
 						$params['value'] = $this->filter->$_filter($params['value']);
 					} else {
 
-						if( is_array($this->fields[$field]) ){ // Field is array
+						if( isset($this->fields[$field]) && is_array($this->fields[$field]) ){ // Field is array
 							if( !$params['multiple'] ) $this->throwError( 'Field '.$field.' is array, but not specified in params as multiple. Possible logic error.' );
 							$this->fields[$field] = array_map( [$this->filter,$_filter], $this->fields[$field] );
-						} else {
+						} elseif( isset($this->fields[$field]) ) {
 							$this->fields[$field] = $this->filter->$_filter( $this->fields[$field] );
 						}
 					}

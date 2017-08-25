@@ -1,6 +1,10 @@
 <?php
 
 namespace Validator;
+use DateTime;
+use Exception;
+use ReflectionMethod;
+
 /**
  * Validation Class
  *
@@ -18,7 +22,8 @@ namespace Validator;
 // Goal is to avoid auto casting
 // A Failure is a soft or unthrown exception, that throws when left unhandled. It acts as a wrapper around an Exception object.
 // Idea is to force handling all errors ( not ignoring them )
-class Failure extends \Exception {
+
+class Failure extends Exception {
 
 	private $field	 = null;  // Field name
 	private $handled  = false; // Handled flag
@@ -84,7 +89,7 @@ abstract class ValidatorShared {
 	// Check for public methods in current class
 	protected function can($method){
 		if( method_exists( $this, $method ) ){
-			$refl = new \ReflectionMethod($this, $method); // Avoid protected method problem
+			$refl = new ReflectionMethod($this, $method); // Avoid protected method problem
 			return $refl->isPublic();
 		}
 

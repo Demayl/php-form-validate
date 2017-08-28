@@ -1,5 +1,6 @@
 <?php
 
+// vim: ts=4:sw=4:noexpandtab
 namespace Validator;
 use DateTime;
 use Exception;

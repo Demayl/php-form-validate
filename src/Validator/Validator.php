@@ -476,6 +476,7 @@ class Validator extends ValidatorShared {
 		}
 
 		$type = isset($params['type']) ? $params['type'] : self::DEFAULT_TYPE;
+		$params['type'] = $type;
 
 		if( is_array($value) && (!isset($params['multiple']) || !$params['multiple']) ){
 			return false;

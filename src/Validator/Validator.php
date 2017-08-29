@@ -426,7 +426,7 @@ class Validator extends ValidatorShared {
 			$params['required'] = self::FIELDS_REQUIRED;
 		}
 
-		$value	  = isset($params['value']) 	? $params['value'] 		: isset($this->fields[$field]) ? $this->fields[$field] : null;
+		$value	  = isset($params['value']) 	? $params['value'] 		: ( isset($this->fields[$field]) ? $this->fields[$field] : null );
 		$msg	  = isset($params['msg']) 		? $params['msg'] 		: 'Invalid field ' . $field; // Default message for invalid field
 		$msg_miss = isset($params['msg_miss']) 	? $params['msg_miss'] 	: $msg; // Message for missing field ( when required )
 

@@ -256,7 +256,7 @@ class ValidatorOptions extends ValidatorShared {
 				if( $check ) break;
 			}
 			elseif( preg_match('/^([\\/#%]).*\1$/', $_match ) ) { // Looks like regex
-				$check = preg_match( $_match,$value );
+				$check = (bool) preg_match( $_match,$value );
 				if( $check ) break;
 			}
 			elseif( 

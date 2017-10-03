@@ -2,3 +2,4 @@ remove test.php
 add tests
 add option to add custom validation
 improve datetime type to support more formats
+type cast values when explicit type is requested

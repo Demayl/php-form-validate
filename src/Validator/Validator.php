@@ -596,6 +596,7 @@ class Validator extends ValidatorShared {
 						break;
 					case 'numeric': // numeric is dual type var - int|float
 						$_value = preg_match("/^\d+$/", $_value) ? (int) $_value : (float) $_value;
+						break;
 					default:
 						$_value = (string) $_value;
 				}

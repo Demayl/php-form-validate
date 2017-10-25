@@ -15,7 +15,7 @@ use ReflectionMethod;
  * @author  Denis Kanchev <denis@demayl.com>
  * @link	https://github.com/Demayl
  * @copyright   Copyright (c) 2017 Denis Kanchev
- * @version 1.1.1
+ * @version 1.1.2
  */
 
 // That class can be used in any other Exception
@@ -435,7 +435,7 @@ class Validator extends ValidatorShared {
 		}
 
 		if( $valid ) {
-			$this->valid[$field] = $this->typeCast($value, $params['type']); // type cast when valid
+			$this->valid[$field] = $this->typeCast($value, isset($params['type']) ? $params['type'] : self::DEFAULT_TYPE); // type cast when valid
 
 			if( isset($params['requires']) ){
 				$this->requires($params['requires'], $field);

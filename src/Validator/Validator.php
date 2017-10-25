@@ -15,7 +15,7 @@ use ReflectionMethod;
  * @author  Denis Kanchev <denis@demayl.com>
  * @link	https://github.com/Demayl
  * @copyright   Copyright (c) 2017 Denis Kanchev
- * @version 0.1.0
+ * @version 1.1.0
  */
 
 // That class can be used in any other Exception

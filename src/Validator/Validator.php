@@ -112,10 +112,10 @@ abstract class ValidatorShared {
 
 // Here add new types as methods
 class ValidatorTypes extends ValidatorShared {
-	const MAIL	  = "/^[\pL\pN_-]+(\.[\pL\pN_-]+)*@[\pL\pN-]+(\.[\pL\pN-]+)*(\.[\pL]{2,12})$/u"; // @TODO add full email validator
-	const DATE	  = '/^(\d{4})-(\d{2})-(\d{2})$/';
+	const MAIL	    = "/^[\pL\pN_-]+(\.[\pL\pN_-]+)*@[\pL\pN-]+(\.[\pL\pN-]+)*(\.[\pL]{2,12})$/u"; // @TODO add full email validator
+	const DATE	    = '/^(\d{4})-(\d{2})-(\d{2})$/';
 	const DATETIME  = '/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}$/'; // MySQL format YYYY-MM-DD hh:mm:ss
-	const TIME	  = '/^(?:[01][0-9]|2[0-3])\:(?:[0-5][0-9])$/'; // 24 hour time format
+	const TIME	    = '/^(?:[01][0-9]|2[0-3])\:(?:[0-5][0-9])$/'; // 24 hour time format
 	const UNIX_TIME = '/^d{10}$/';
 
 	public function int($what){
@@ -419,8 +419,8 @@ class Validator extends ValidatorShared {
 
 		// FILTER here values
 
-		$this->filterField($field,$params); // It can handle array values
-		$valid = $this->valid($field, $params);
+		$params = $this->filterField($field,$params); // It can handle array values. Modifies $this->fields
+		$valid  = $this->valid($field, $params);
 
 		if( !isset($params['required']) ){ // Set default behaviour for required or not fields
 			$params['required'] = self::FIELDS_REQUIRED;
@@ -435,7 +435,7 @@ class Validator extends ValidatorShared {
 		}
 
 		if( $valid ) {
-			$this->valid[$field] = $value;
+			$this->valid[$field] = $this->typeCast($value, $params['type']); // type cast when valid
 
 			if( isset($params['requires']) ){
 				$this->requires($params['requires'], $field);
@@ -455,7 +455,7 @@ class Validator extends ValidatorShared {
 
 	}
 
-	public function valid($field, array $params){
+	public function valid($field, array $params) {
 		if( !is_string($field) && !is_int($field) )		   return $this->throwError('Parameter name must be a string!');
 		if( isset($type['disabled']) && $params['disabled'] ) return null;
 
@@ -545,7 +545,7 @@ class Validator extends ValidatorShared {
 				if( $_filter && $this->filter->can( $_filter ) ){
 
 					if( array_key_exists('value',$params) ){
-						$params['value'] = $this->filter->$_filter($params['value']);
+						$this->fields[$field] = $params['value'] = $this->filter->$_filter($params['value']);
 					} else {
 
 						if( isset($this->fields[$field]) && is_array($this->fields[$field]) ){ // Field is array
@@ -560,6 +560,51 @@ class Validator extends ValidatorShared {
 				}
 			}
 		}
+
+		return $params;
+	}
+
+	// Cast value to provided type
+	private function typeCast($value, $type = self::DEFAULT_TYPE){
+		$value_is_array = true;
+		if(!is_array($value)) {
+			$value_is_array = false;
+			$value = [$value];
+		}
+
+		$end_value = [];
+
+		if( !isset($type) ) $type = self::DEFAULT_TYPE;
+
+		foreach( $value as $_value ){
+			if( $_value !== null && $type){
+				switch($type){
+					case 'int':
+						$_value = (int) $_value;
+						break;
+					case 'float':
+						$_value = (float) $_value;
+						break;
+					case 'string':
+						$_value = (string) $_value;
+						break;
+					case 'char':
+						$_value = (string) $_value;
+						break;
+					case 'bool':
+						$_value = (bool) $_value;
+						break;
+					case 'numeric': // numeric is dual type var - int|float
+						$_value = preg_match("/^\d+$/", $_value) ? (int) $_value : (float) $_value;
+					default:
+						$_value = (string) $_value;
+				}
+			}
+
+			$end_value[] = $_value;
+		}
+
+		return $value_is_array ? $end_value : $end_value[0];
 	}
 
 	// Test wrong used params @TODO remote it

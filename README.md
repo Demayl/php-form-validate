@@ -71,7 +71,6 @@ if( $validator->hasErrors() ){
 
 ## Notes
 
-
 ## Methods
 
 - **clear()** : Clear all valid/invalid/error fields. Used to prepare another validation. It's called on every validateAll() call

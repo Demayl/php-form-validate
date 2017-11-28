@@ -251,7 +251,7 @@ class ValidatorOptions extends ValidatorShared {
 		$check = false;
 
 		foreach( $match as $_match ){
-			if( is_callable( $_match ) ){
+			if( !is_string($_match) && is_object($_match) && is_callable( $_match ) ){
 				$check = $_match( $value );
 				if( $check ) break;
 			}

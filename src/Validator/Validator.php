@@ -172,6 +172,9 @@ class ValidatorTypes extends ValidatorShared {
 		return $what && preg_match("/^(\d+(?:,|$))+$/", $what);
 	}
 
+	public function any() {
+		return true;
+	}
 }
 
 

@@ -14,7 +14,7 @@ use ReflectionMethod;
  * @package Validator::Validator
  * @author  Denis Kanchev <denis@demayl.com>
  * @link	https://github.com/Demayl
- * @copyright   Copyright (c) 2017 Denis Kanchev
+ * @copyright   Copyright (c) 2017-2019 Denis Kanchev
  * @version 1.1.3
  */
 
